@@ -37,7 +37,7 @@ helm upgrade zesty-httpbin-example ./ --install --namespace zesty-examples --cre
 
 ## Manual trigger
 
-The stress test runs periodically once a week by defauly, but in case you want to manually trigger the stress traffic, you can manually run the job:
+The stress test runs periodically once a week by default, but in case you want to manually trigger the stress traffic, you can manually run the job:
 ```bash
  kubectl create job --namespace zesty-examples --from=cronjob/stress-test run-stress
 ```
