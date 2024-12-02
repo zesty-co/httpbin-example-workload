@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: httpbin-pdb
+  labels:
+    app: httpbin
+spec:
+  selector:
+    matchLabels:
+      app: httpbin
+  minAvailable: {{ .Values.pdb.minAvailable}}

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+  labels:
+    app: httpbin
+spec:
+  replicas: {{ .Values.httpbin.replicas }}
+  selector:
+    matchLabels:
+      app: httpbin
+
+  template:
+    metadata:
+      labels:
+        app: httpbin
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: httpbin
+          image: "{{ .Values.httpbin.image.repository }}:{{ .Values.httpbin.image.tag }}"
+          imagePullPolicy: {{ .Values.httpbin.image.pullPolicy }}
+          resources:
+            requests:
+              cpu: {{ .Values.httpbin.resources.requests.cpu }}
+              memory: {{ .Values.httpbin.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.httpbin.resources.limits.cpu }}
+              memory: {{ .Values.httpbin.resources.limits.memory }}
+          ports:
+            - containerPort: {{ .Values.httpbin.service.port }}
+          readinessProbe:
+            httpGet:
+              port: {{ .Values.httpbin.service.port }}
+              path: /get
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              port: {{ .Values.httpbin.service.port }}
+              path: /get
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
