@@ -24,7 +24,7 @@ pdb:
   minAvailable: 50%
 
 stressTest:
-  schedule: "0 12 * * 4" # At 12:00 on Thursday.
+  schedule: "00 12 * * 1,4" # At 12:00 on Monday and Thursday.
   image:
     repository: ricoli/hey
     tag: latest
